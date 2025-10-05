@@ -63,26 +63,50 @@ API docs available at `http://localhost:8000/docs`
 
 ## API Endpoints
 
+Base URL: https://online-library-system-nk64.onrender.com
+
 ### Books
 
 **Create Book**
 ```
 POST /books/
 {
-  "title": "Book Title",
-  "author": "Author Name",
+  "title": "book1",
+  "author": "writer1",
   "copies_available": 5
+}
+
+Response:
+{
+  "id": 1,
+  "title": "book1",
+  "author": "writer1",
+  "copies_available": 5,
+  "total_borrows": 0
 }
 ```
 
 **Get All Books**
 ```
 GET /books/
+
+Response:
+[
+  {
+    "id": 1,
+    "title": "book1",
+    "author": "writer1",
+    "copies_available": 5,
+    "total_borrows": 0
+  }
+]
 ```
 
 **Search Books**
 ```
-GET /books/search?q=query
+GET /books/search?q=book
+
+Response: Array of matching books
 ```
 
 ### Users
@@ -91,18 +115,41 @@ GET /books/search?q=query
 ```
 POST /users/
 {
-  "name": "User Name"
+  "name": "shivam"
+}
+
+Response:
+{
+  "id": 1,
+  "name": "shivam",
+  "borrowed_books": []
 }
 ```
 
 **Get All Users**
 ```
 GET /users/
+
+Response:
+[
+  {
+    "id": 1,
+    "name": "shivam",
+    "borrowed_books": []
+  }
+]
 ```
 
 **Get User by ID**
 ```
-GET /users/{user_id}
+GET /users/1
+
+Response:
+{
+  "id": 1,
+  "name": "shivam",
+  "borrowed_books": [1, 2]
+}
 ```
 
 ### Library Operations
@@ -114,6 +161,11 @@ POST /library/borrow
   "user_id": 1,
   "book_id": 1
 }
+
+Response:
+{
+  "message": "book borrowed successfully"
+}
 ```
 
 **Return Book**
@@ -123,14 +175,31 @@ POST /library/return
   "user_id": 1,
   "book_id": 1
 }
+
+Response:
+{
+  "message": "book returned successfully"
+}
 ```
 
 **Get Reports**
 ```
 GET /library/reports
-```
 
-Returns most borrowed book and user with most books borrowed.
+Response:
+{
+  "most_borrowed_book": {
+    "id": 1,
+    "title": "book1",
+    "total_borrows": 5
+  },
+  "top_user": {
+    "id": 1,
+    "name": "shivam",
+    "books_count": 3
+  }
+}
+```
 
 ## Project Structure
 
@@ -166,17 +235,17 @@ Use the interactive API docs at `/docs` or use curl/Postman
 Example:
 ```bash
 # Create a book
-curl -X POST http://localhost:8000/books/ \
+curl -X POST https://online-library-system-nk64.onrender.com/books/ \
   -H "Content-Type: application/json" \
-  -d '{"title":"1984","author":"George Orwell","copies_available":3}'
+  -d '{"title":"book1","author":"writer1","copies_available":3}'
 
 # Create a user
-curl -X POST http://localhost:8000/users/ \
+curl -X POST https://online-library-system-nk64.onrender.com/users/ \
   -H "Content-Type: application/json" \
-  -d '{"name":"John Doe"}'
+  -d '{"name":"shivam"}'
 
 # Borrow a book
-curl -X POST http://localhost:8000/library/borrow \
+curl -X POST https://online-library-system-nk64.onrender.com/library/borrow \
   -H "Content-Type: application/json" \
   -d '{"user_id":1,"book_id":1}'
 ```
