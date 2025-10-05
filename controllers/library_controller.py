@@ -84,7 +84,7 @@ async def get_reports():
         "top_user":{
             "id":top_user["id"],
             "name": top_user["name"],
-            "books_count":top_user["count"]
+            "books_count":top_user["books_borrowed"]
         } if top_user else None
     }
 
