@@ -2,6 +2,10 @@
 
 A simple REST API for managing library operations built with FastAPI and MongoDB.
 
+## Live Demo
+
+API is deployed at: https://online-library-system-nk64.onrender.com/docs
+
 ## Features
 
 - Book Management (CRUD operations)
